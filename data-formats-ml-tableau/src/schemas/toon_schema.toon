@@ -1,0 +1,12 @@
+entity Job {
+  field job_id: string [primary_key]
+  field title: string
+  field company_location: string
+  field experience_level: string
+  field employment_type: string
+  field salary_min: float
+  field salary_max: float
+  field currency: string
+  field skills: list<string> [required]
+  field job_category: string
+}

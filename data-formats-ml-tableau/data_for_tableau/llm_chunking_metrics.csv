@@ -1,0 +1,4 @@
+format,llm_encoding,token_budget,num_chunks,avg_chunk_tokens,chunk_token_std,min_chunk_tokens,max_chunk_tokens,underutilized_chunk_fraction
+CSV,cl100k_base,512,2247,503.24,7.43,254,512,0.0004
+JSON,cl100k_base,512,7466,508.33,3.31,319,512,0.0
+TOON,cl100k_base,512,6270,508.59,3.86,277,512,0.0

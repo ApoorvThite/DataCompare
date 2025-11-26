@@ -1,0 +1,4 @@
+format,llm_model,prompt_tokens_est,response_tokens_est,parse_error_flag,num_true_fields,num_predicted_fields,field_recall,field_precision,type_accuracy,hallucinated_fields
+CSV,gpt-4o-mini,637,139,0,10,10,1.0,1.0,1.0,0
+JSON,gpt-4o-mini,555,151,0,10,8,0.7,0.875,1.0,1
+TOON,gpt-4o-mini,1290,193,0,10,10,1.0,1.0,1.0,0

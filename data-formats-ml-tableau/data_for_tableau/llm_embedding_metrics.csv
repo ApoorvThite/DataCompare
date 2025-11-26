@@ -1,0 +1,4 @@
+format,embedding_model,num_records_used,num_classes,silhouette_score,intra_class_cosine_mean,inter_class_cosine_mean
+CSV,text-embedding-3-small,500,63,0.2894,0.9488,0.8596
+JSON,text-embedding-3-small,500,63,0.472,0.96,0.8514
+TOON,text-embedding-3-small,500,63,0.6256,0.9928,0.9441

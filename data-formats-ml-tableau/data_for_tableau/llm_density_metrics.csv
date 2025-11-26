@@ -1,0 +1,4 @@
+format,llm_encoding,llm_token_count,text_length_chars,non_semantic_char_count,non_semantic_token_est,semantic_density
+CSV,cl100k_base,1133022,2979208,362997,138051.32,0.8782
+JSON,cl100k_base,3795180,12255456,2540917,786852.6,0.7927
+TOON,cl100k_base,3190276,10400501,725992,222692.62,0.9302

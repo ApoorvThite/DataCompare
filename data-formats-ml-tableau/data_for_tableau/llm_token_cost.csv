@@ -1,0 +1,4 @@
+format,llm_encoding,llm_token_count,tokens_per_record,tokens_per_field
+CSV,cl100k_base,1133022,28.09,2.8092
+JSON,cl100k_base,3795180,94.1,11.7623
+TOON,cl100k_base,3190276,79.1,7.91

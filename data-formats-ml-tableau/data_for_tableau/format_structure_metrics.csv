@@ -1,0 +1,4 @@
+format,num_tokens,num_nested_levels,num_key_paths,num_type_inference_ops,file_size_bytes,file_size_gzip_bytes,compression_ratio,avg_size_per_record_bytes,needs_flattening,needs_type_casts,needs_schema_lookup,feature_engineering_difficulty_score
+CSV,121848,0,10,403320,2979208,343225,0.1152,73.87,0,1,0,1
+JSON,1089817,3,11,0,12255456,444307,0.0363,303.86,1,0,0,1
+TOON,1452839,1,10,0,10400501,433735,0.0417,257.87,0,0,1,1

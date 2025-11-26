@@ -1,0 +1,4 @@
+format,model_type,accuracy,f1_macro,prep_time_s,train_time_s,predict_time_s,feature_count,pipeline_steps_count,cv_accuracy_mean,cv_accuracy_std,cv_f1_macro_mean,cv_f1_macro_std,encoded_feature_dim,encoded_density,encoded_sparsity
+CSV,LogisticRegression,0.9727,0.9612,0.0205,7.4383,0.006,6,2,0.9711,0.009,0.9579,0.0138,308,0.0195,0.9805
+JSON,LogisticRegression,0.9727,0.9612,0.0252,8.0335,0.0072,6,2,0.9711,0.009,0.9579,0.0138,308,0.0195,0.9805
+TOON,LogisticRegression,0.9727,0.9612,0.025,7.4463,0.0073,6,2,0.9711,0.009,0.9579,0.0138,308,0.0195,0.9805

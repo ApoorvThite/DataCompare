@@ -1,0 +1,4 @@
+format,file_path,file_size_kb,parse_time_ms,num_records,num_fields
+CSV,/Users/apoorvthite/Desktop/DataCompare/data-formats-ml-tableau/data_formatted/salaries_flat.csv,2909.38,95.87,40332,10
+JSON,/Users/apoorvthite/Desktop/DataCompare/data-formats-ml-tableau/data_formatted/salaries_nested.json,11968.22,154.34,40332,10
+TOON,/Users/apoorvthite/Desktop/DataCompare/data-formats-ml-tableau/data_formatted/salaries.toon,10156.74,396.163,40332,10

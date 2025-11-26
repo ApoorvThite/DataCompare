@@ -1,0 +1,4 @@
+format,has_explicit_schema,has_type_annotations,has_constraints,supports_nested_structs,schema_richness_score
+CSV,0,0,0,0,0.0
+JSON,0,0,0,1,0.25
+TOON,1,1,1,1,1.0

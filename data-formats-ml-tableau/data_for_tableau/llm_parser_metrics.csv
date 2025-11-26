@@ -1,0 +1,4 @@
+format,llm_model,num_records_evaluated,field_match_rate,numeric_field_accuracy,string_field_accuracy,parse_failure_rate,avg_prompt_tokens_est,avg_response_tokens_est
+CSV,gpt-4o-mini,40,0.9722,1.0,0.9643,0.0,134.5,78.7
+JSON,gpt-4o-mini,40,1.0,1.0,1.0,0.0,176.5,78.5
+TOON,gpt-4o-mini,40,1.0,1.0,1.0,0.0,181.5,78.5
