@@ -4,32 +4,35 @@
 
 This repository presents a rigorous, end-to-end evaluation of three major data formats:
 
-- **CSV**  
-- **JSON**  
+- **CSV**
+- **JSON**
 - **TOON** (Token-Oriented Object Notation)
 
-The project quantifies how data representation influences **machine learning runtime**, **LLM tokenization cost**, **semantic structure**, **embedding quality**, **hallucination rate**, and the overall efficiency of AI workflows.
+The project quantifies how data representation influences **machine learning runtime**, **LLM tokenization cost**, **semantic structure**, **embedding quality**, **hallucination rate**, and overall efficiency of AI workflows.
 
 This is not just a formatting comparison.  
-It is a **deep, multi-layer systems evaluation** of the entire AI stack: storage → schema → preprocessing → ML → embeddings → LLM behavior.
+It is a **deep, multi-layer systems evaluation** of the entire AI stack:
+
+> **storage → schema → preprocessing → ML → embeddings → LLM behavior**
 
 ---
 
 ## 🎯 Motivation
 
-AI pipelines depend on structured and semi-structured data, yet almost no research evaluates how the *choice of format* affects:
+AI pipelines depend heavily on structured and semi-structured data, yet almost no systematic research evaluates how the *choice of format* affects:
 
 - preprocessing overhead  
-- training time and inference latency  
+- model training time  
+- inference latency  
 - token usage during LLM tasks  
 - semantic density  
-- embedding quality  
-- parsing accuracy  
+- embedding separability  
+- parsing reliability  
 - hallucination resistance  
-- schema richness and path complexity  
-- storage and compression efficiency  
+- compression & storage  
+- schema richness  
 
-This project fills that gap with **uniform experiments** on CSV, JSON, and TOON representations of the same dataset.
+This project fills that gap with **controlled experiments** comparing CSV, JSON, and TOON representations of the same canonical dataset.
 
 ---
 
@@ -45,96 +48,136 @@ This project fills that gap with **uniform experiments** on CSV, JSON, and TOON 
 - token cost  
 - hallucination rate  
 - parsing accuracy  
+- semantic density  
 
 ### ✔ Embedding Quality
 - silhouette score  
-- cluster separability  
+- intra-class vs inter-class similarity  
 - chunk utilization  
 
 ### ✔ Schema & Structural Complexity
 - nested depth  
-- number of paths  
-- explicit schema support  
+- key path count  
 - type annotations  
 - constraints  
-- flattening needs  
+- explicit schema richness  
 
-### ✔ Storage-Level Characteristics
+### ✔ Storage & Compression
 - file size  
-- gzip-compressed size  
+- gzip size  
 - compression ratio  
-- average record size  
-
-Each metric reveals how format choice shapes performance across the entire AI stack.
+- average bytes per record  
 
 ---
 
-## 📊 Dashboards Summary
+# 📊 Empirical Results (All Metric Tables)
 
-The Tableau dashboards included in this project present a consolidated, visual narrative.  
-Here is the high-level summary of each one.
-
----
-
-### **Dashboard 1 — How CSV, JSON, and TOON Differ in Schema & Structure**
-This dashboard analyzes:
-
-- nested structure  
-- number of key paths  
-- schema capabilities  
-- schema richness score  
-- file size characteristics  
-
-**Key Insight:**  
-TOON provides the strongest schema richness and type-level guarantees while staying more compact than JSON.
+The tables below represent the **exact numeric results** used to build the Tableau dashboards.
 
 ---
 
-### **Dashboard 2 — Structural & Computational Efficiency**
-This dashboard covers:
+## **1. Format Metrics**
 
-- processing overhead matrix  
-- compression ratio  
-- average record size  
-- feature engineering difficulty  
-- key path complexity  
-
-**Key Insight:**  
-CSV is cheapest to process, TOON offers rich structure with lower overhead than JSON, and JSON is the heaviest structurally.
+| format | file_path | file_size_kb | parse_time_ms | num_records | num_fields |
+| --- | --- | --- | --- | --- | --- |
+| CSV | salaries_flat.csv | 2909.38 | 95.87 | 40332 | 10 |
+| JSON | salaries_nested.json | 11968.22 | 154.34 | 40332 | 10 |
+| TOON | salaries.toon | 10156.74 | 396.163 | 40332 | 10 |
 
 ---
 
-### **Dashboard 3 — ML Runtime Efficiency**
-This dashboard includes only three critical runtime metrics:
+## **2. Format Structure Metrics**
 
-- preprocessing time  
-- training time  
-- prediction latency  
-
-**Key Insight:**  
-CSV consistently trains and infers the fastest.  
-TOON slightly beats JSON due to reduced noise and lower token expansion in preprocessing.
+| format | num_tokens | num_nested_levels | num_key_paths | num_type_inference_ops | file_size_bytes | file_size_gzip_bytes | compression_ratio | avg_size_per_record_bytes | needs_flattening | needs_type_casts | needs_schema_lookup | feature_engineering_difficulty_score |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CSV | 121848 | 0 | 10 | 403320 | 2979208 | 343225 | 0.1152 | 73.87 | 0 | 1 | 0 | 1 |
+| JSON | 1089817 | 3 | 11 | 0 | 12255456 | 444307 | 0.0363 | 303.86 | 1 | 0 | 0 | 1 |
+| TOON | 1452839 | 1 | 10 | 0 | 10400501 | 433735 | 0.0417 | 257.87 | 0 | 0 | 1 | 1 |
 
 ---
 
-### **Dashboard 4 — LLM & Embedding Behavior**
-This dashboard compares:
+## **3. Schema Metrics**
 
-- semantic density  
-- tokens per record  
-- token cost  
-- chunk utilization  
-- parsing accuracy  
-- hallucination rate  
-- embedding quality  
-
-**Key Insight:**  
-TOON yields the **highest embedding quality**, **lowest hallucination rate**, and **best semantic density**, making it the strongest choice for LLM-intensive workflows.
+| format | has_explicit_schema | has_type_annotations | has_constraints | supports_nested_structs | schema_richness_score |
+| --- | --- | --- | --- | --- | --- |
+| CSV | 0 | 0 | 0 | 0 | 0.0 |
+| JSON | 0 | 0 | 0 | 1 | 0.25 |
+| TOON | 1 | 1 | 1 | 1 | 1.0 |
 
 ---
 
-## 📂 Repository Structure
-```
+## **4. ML Metrics**
+
+| format | model_type | accuracy | f1_macro | prep_time_s | train_time_s | predict_time_s | feature_count | pipeline_steps_count | cv_accuracy_mean | cv_accuracy_std | cv_f1_macro_mean | cv_f1_macro_std | encoded_feature_dim | encoded_density | encoded_sparsity |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CSV | LogisticRegression | 0.9727 | 0.9612 | 0.0205 | 7.4383 | 0.006 | 6 | 2 | 0.9711 | 0.009 | 0.9579 | 0.0138 | 308 | 0.0195 | 0.9805 |
+| JSON | LogisticRegression | 0.9727 | 0.9612 | 0.0252 | 8.0335 | 0.0072 | 6 | 2 | 0.9711 | 0.009 | 0.9579 | 0.0138 | 308 | 0.0195 | 0.9805 |
+| TOON | LogisticRegression | 0.9727 | 0.9612 | 0.025 | 7.4463 | 0.0073 | 6 | 2 | 0.9711 | 0.009 | 0.9579 | 0.0138 | 308 | 0.0195 | 0.9805 |
+
+---
+
+## **5. LLM Token Cost**
+
+| format | llm_encoding | llm_token_count | tokens_per_record | tokens_per_field |
+| --- | --- | --- | --- | --- |
+| CSV | cl100k_base | 1,133,022 | 28.09 | 2.8092 |
+| JSON | cl100k_base | 3,795,180 | 94.1 | 11.7623 |
+| TOON | cl100k_base | 3,190,276 | 79.1 | 7.91 |
+
+---
+
+## **6. LLM Schema Eval**
+
+| format | llm_model | prompt_tokens_est | response_tokens_est | parse_error_flag | num_true_fields | num_predicted_fields | field_recall | field_precision | type_accuracy | hallucinated_fields |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CSV | gpt-4o-mini | 637 | 139 | 0 | 10 | 10 | 1.0 | 1.0 | 1.0 | 0 |
+| JSON | gpt-4o-mini | 555 | 151 | 0 | 10 | 8 | 0.7 | 0.875 | 1.0 | 1 |
+| TOON | gpt-4o-mini | 1290 | 193 | 0 | 10 | 10 | 1.0 | 1.0 | 1.0 | 0 |
+
+---
+
+## **7. LLM Parser Metrics**
+
+| format | llm_model | num_records_evaluated | field_match_rate | numeric_field_accuracy | string_field_accuracy | parse_failure_rate | avg_prompt_tokens_est | avg_response_tokens_est |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CSV | gpt-4o-mini | 40 | 0.9722 | 1.0 | 0.9643 | 0.0 | 134.5 | 78.7 |
+| JSON | gpt-4o-mini | 40 | 1.0 | 1.0 | 1.0 | 0.0 | 176.5 | 78.5 |
+| TOON | gpt-4o-mini | 40 | 1.0 | 1.0 | 1.0 | 0.0 | 181.5 | 78.5 |
+
+---
+
+## **8. LLM Embedding Metrics**
+
+| format | embedding_model | num_records_used | num_classes | silhouette_score | intra_class_cosine_mean | inter_class_cosine_mean |
+| --- | --- | --- | --- | --- | --- | --- |
+| CSV | text-embedding-3-small | 500 | 63 | 0.2894 | 0.9488 | 0.8596 |
+| JSON | text-embedding-3-small | 500 | 63 | 0.4720 | 0.9600 | 0.8514 |
+| TOON | text-embedding-3-small | 500 | 63 | 0.6256 | 0.9928 | 0.9441 |
+
+---
+
+## **9. LLM Density Metrics**
+
+| format | llm_encoding | llm_token_count | text_length_chars | non_semantic_char_count | non_semantic_token_est | semantic_density |
+| --- | --- | --- | --- | --- | --- | --- |
+| CSV | cl100k_base | 1,133,022 | 2,979,208 | 362,997 | 138,051.32 | 0.8782 |
+| JSON | cl100k_base | 3,795,180 | 12,255,456 | 2,540,917 | 786,852.6 | 0.7927 |
+| TOON | cl100k_base | 3,190,276 | 10,400,501 | 725,992 | 222,692.62 | 0.9302 |
+
+---
+
+## **10. LLM Chunking Metrics**
+
+| format | llm_encoding | token_budget | num_chunks | avg_chunk_tokens | chunk_token_std | min_chunk_tokens | max_chunk_tokens | underutilized_chunk_fraction |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CSV | cl100k_base | 512 | 2,247 | 503.24 | 7.43 | 254 | 512 | 0.0004 |
+| JSON | cl100k_base | 512 | 7,466 | 508.33 | 3.31 | 319 | 512 | 0.0 |
+| TOON | cl100k_base | 512 | 6,270 | 508.59 | 3.86 | 277 | 512 | 0.0 |
+
+---
+
+# 📂 Repository Structure
+
 data-formats-ml-tableau/
 │
 ├── data_raw/
@@ -146,7 +189,7 @@ data-formats-ml-tableau/
 ├── data_formatted/
 │ ├── salaries_flat.csv
 │ ├── salaries_nested.json
-│ ├── salaries_toon.toon
+│ ├── salaries.toon
 │
 ├── metrics/
 │ ├── format_structure_metrics.csv
@@ -170,67 +213,57 @@ data-formats-ml-tableau/
 │ ├── compute_embedding_quality.py
 │
 └── README.md
-```
 
 
 ---
 
-## ⚙️ Methodology Overview
+# ⚙️ Methodology Overview
 
 ### **1. Canonical Dataset Preparation**
-All formats originate from a single normalized dataset.  
-This ensures fair comparison across formats.
+All formats originate from a single normalized dataset.
 
 ### **2. Format Generation**
 The same data is represented as:
-
-- flat CSV  
-- hierarchical JSON  
-- type-annotated TOON  
+- flat CSV
+- hierarchical JSON
+- type-annotated TOON
 
 ### **3. Metric Computation**
-Multiple scripts generate structured metrics:
-
-- schema-level  
-- structural  
-- ML runtime  
-- LLM embeddings  
-- token-level  
-- hallucination metrics  
-- parsing reliability  
+Scripts generate:
+- schema metrics  
+- structural metrics  
+- ML runtime metrics  
+- LLM token metrics  
+- embedding metrics  
+- hallucination and parsing metrics  
 
 ### **4. Tableau Dashboards**
-Each dashboard focuses on one aspect of the format comparison and is designed to be presentation-ready.
+Each dashboard visualizes a different aspect of the comparison.
 
 ---
 
-## 🔍 Key Findings
+# 🔍 Key Findings
 
 ### **CSV**
-- fastest for ML training and inference  
-- cheapest token cost  
-- extremely simple structure  
-- lowest semantic density  
-- poor embedding quality  
+- Fastest for ML training and inference  
+- Lowest token cost  
+- Simple but limited  
 
 ### **JSON**
-- highest token cost  
-- deepest nested structures  
-- highest preprocessing overhead  
-- moderate embedding quality  
-- prone to hallucination  
+- Most verbose  
+- Highest preprocessing overhead  
+- Prone to LLM hallucination  
 
 ### **TOON**
-- best embedding quality  
-- lowest hallucination rate  
-- strong schema guarantees  
-- richer type system than JSON  
-- lower token cost than JSON  
-- strong semantic density  
+- Best embedding quality  
+- Best semantic density  
+- Strong schema guarantees  
+- Lower token cost than JSON  
+- Most LLM-friendly format  
 
 ---
 
-## 🚀 When To Use Each Format
+# 🚀 When To Use Each Format
 
 | Use Case | Best Format |
 |----------|-------------|
@@ -241,31 +274,28 @@ Each dashboard focuses on one aspect of the format comparison and is designed to
 | Best embedding quality | TOON |
 | Easiest preprocessing | CSV |
 | Strong type guarantees | TOON |
-| High-fidelity semantic representation | TOON |
+| High-fidelity semantics | TOON |
 
 ---
 
-## 📝 Conclusion
+# 📝 Conclusion
 
 This project provides one of the **most comprehensive comparisons ever done** between CSV, JSON, and TOON across ML, LLM, and schema dimensions.
 
-It shows that:
+It demonstrates that:
 
-- CSV is the **computationally fastest**,  
-- JSON is the **most verbose and costly**,  
-- TOON is the **best semantically and for LLM/embedding performance**.
+- **CSV** is the *computationally fastest*,  
+- **JSON** is the *heaviest and costliest*,  
+- **TOON** is the *best LLM-first format*, with superior semantic density and embedding quality.
 
-If your workflow involves LLMs, embeddings, or semantic search, **TOON is the superior format**.  
-If your work is traditional ML, CSV remains optimal.
+If your workflow involves LLMs, embeddings, or semantic search, **TOON is the superior choice**.  
+For traditional ML pipelines, **CSV remains optimal**.
 
 ---
 
-## 📬 Contact
+# 📬 Contact
 
-For discussions, questions, or collaborations:  
 **Apoorv Thite**  
-Applied Data Science | AI/ML Engineering  
+Applied Data Science • AI Engineering  
 Penn State University  
-
----
 
