@@ -178,6 +178,8 @@ The tables below represent the **exact numeric results** used to build the Table
 
 # 📂 Repository Structure
 
+```
+
 data-formats-ml-tableau/
 │
 ├── data_raw/
@@ -213,7 +215,7 @@ data-formats-ml-tableau/
 │ ├── compute_embedding_quality.py
 │
 └── README.md
-
+```
 
 ---
 
